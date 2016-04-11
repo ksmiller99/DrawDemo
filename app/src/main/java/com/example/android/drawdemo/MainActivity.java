@@ -5,18 +5,48 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    View panel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        panel = (View)findViewById(R.id.vwCanvas);
+        panel.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("event","Down");
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d("event","Down");
+                        SharedXYvalues.startX = SharedXYvalues.endX = event.getX();
+                        SharedXYvalues.startY = SharedXYvalues.endY = event.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        Log.d("event","Up");
+                        SharedXYvalues.endX = event.getX();
+                        SharedXYvalues.endY = event.getY();
+                        break;
+
+                    default:
+                        break;
+
+                }
+                return true;
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

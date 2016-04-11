@@ -2,6 +2,7 @@ package com.example.android.drawdemo;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,11 +15,11 @@ import android.graphics.Canvas;
 public class MyPanel extends View {
     Paint paint = new Paint();
 
-    float startX, startY, endX, endY = 0;
-
     public MyPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
+
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -27,34 +28,36 @@ public class MyPanel extends View {
         paint.setARGB(255, 0, 0, 255);
         Log.d("KSM", "Draw");
         canvas.drawRect(
-                Math.min(startX, endX),
-                Math.min(startY, endY),
-                Math.max(startX, endX),
-                Math.max(startY, endY),
+                Math.min(SharedXYvalues.startX, SharedXYvalues.endX),
+                Math.min(SharedXYvalues.startY, SharedXYvalues.endY),
+                Math.max(SharedXYvalues.startX, SharedXYvalues.endX),
+                Math.max(SharedXYvalues.startY, SharedXYvalues.endY),
                 paint);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                endX = startX = event.getX();
-                endY = startY = event.getY();
-                break;
-
-            case MotionEvent.ACTION_UP:
-                endX = event.getX();
-                endY = event.getY();
-
-
-                break;
-
-            default:
-                break;
-        }
         invalidate();
-
-        return true;
     }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                SharedXYvalues.endX = SharedXYvalues.startX = event.getX();
+//                SharedXYvalues.endY = SharedXYvalues.startY = event.getY();
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//                SharedXYvalues.endX = event.getX();
+//                SharedXYvalues.endY = event.getY();
+//
+//
+//                break;
+//
+//            default:
+//                break;
+//        }
+//        invalidate();
+//
+//        return true;
+//    }
+
 }
